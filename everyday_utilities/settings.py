@@ -54,6 +54,7 @@ INSTALLED_APPS = [
 ]
 
 AUTH_USER_MODEL = 'users.User'
+
 #  Placing whitenoise middleware in the order specified in the documentation:
 #  http://whitenoise.evans.io/en/stable/django.html 
 
