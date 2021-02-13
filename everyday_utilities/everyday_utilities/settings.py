@@ -27,8 +27,6 @@ DEBUG = True
 if DEBUG:
     with open( CURRENT_DIR / 'secret_key.txt') as sk:
         SECRET_KEY = sk.read().strip()
-else:
-    SECRET_KEY = os.environ['SECRET_KEY']
 
 ALLOWED_HOSTS = []
 
