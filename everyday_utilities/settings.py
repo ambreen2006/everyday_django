@@ -37,7 +37,7 @@ SECRET_KEY = env("SECRET_KEY")
 if DEBUG:
     ALLOWED_HOSTS = []
 else:
-    ALLOWED_HOSTS = ['localhost', 'everydayapps.herokuapp.com']
+    ALLOWED_HOSTS = ['everyday-apps.herokuapp.com']
 
 # Application definition
 
