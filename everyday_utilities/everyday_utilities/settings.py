@@ -11,7 +11,12 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
+import environ
+import dj_database_url
 from pathlib import Path
+
+env = environ.Env()
+environ.Env.read_env()
 
 CURRENT_DIR = Path(__file__).resolve().parent
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -76,12 +81,9 @@ WSGI_APPLICATION = 'everyday_utilities.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+DATABASES = {}
+
+DATABASES['default'] = dj_database_url.config(default=env("DATABASE_URL"))
 
 
 # Password validation
