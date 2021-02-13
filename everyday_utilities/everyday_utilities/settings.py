@@ -18,9 +18,8 @@ from pathlib import Path
 env = environ.Env()
 environ.Env.read_env()
 
-CURRENT_DIR = Path(__file__).resolve().parent
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = CURRENT_DIR.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -29,9 +28,7 @@ BASE_DIR = CURRENT_DIR.parent
 DEBUG = True
 
 # SECURITY WARNING: keep the secret key used in production secret!
-if DEBUG:
-    with open( CURRENT_DIR / 'secret_key.txt') as sk:
-        SECRET_KEY = sk.read().strip()
+SECRET_KEY = env("SECRET_KEY")
 
 ALLOWED_HOSTS = []
 
@@ -84,7 +81,6 @@ WSGI_APPLICATION = 'everyday_utilities.wsgi.application'
 DATABASES = {}
 
 DATABASES['default'] = dj_database_url.config(default=env("DATABASE_URL"))
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
