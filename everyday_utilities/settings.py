@@ -42,6 +42,7 @@ else:
 
 INSTALLED_APPS = [
     'everyday_notes.apps.EverydayNotesConfig',
+    'users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
