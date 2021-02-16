@@ -1,5 +1,10 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from rest_framework import viewsets, permissions
 
-def index(request):
-    return HttpResponse("Everyday Notes App")
+from .models import EDNote
+from .serializers import EDNoteSerializer
+
+
+class EDNoteView(viewsets.ModelViewSet):
+    queryset = EDNote.objects.all()
+    serializer_class = EDNoteSerializer
+    permission_classes = (permissions.IsAuthenticated, )
