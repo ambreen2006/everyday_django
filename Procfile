@@ -1,1 +1,1 @@
-gunicorn everyday_utilities.wsgi
+web: gunicorn everyday_utilities.wsgi --log-file -

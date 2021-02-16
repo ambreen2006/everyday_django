@@ -36,11 +36,13 @@ SECRET_KEY = env("SECRET_KEY")
 if DEBUG:
     ALLOWED_HOSTS = []
 else:
-    ALLOWED_HOSTS = ['everyday-apps.herokuapp.com']
+    ALLOWED_HOSTS = ['localhost', 'everyday-apps.herokuapp.com']
 
 # Application definition
 
 INSTALLED_APPS = [
+    'everyday_notes.apps.EverydayNotesConfig',
+    'users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -68,7 +70,7 @@ ROOT_URLCONF = 'everyday_utilities.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -133,3 +135,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+os.makedirs(STATIC_ROOT, exist_ok=True)
