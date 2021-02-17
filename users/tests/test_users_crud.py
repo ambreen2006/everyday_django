@@ -65,8 +65,8 @@ class NotesTest(APITestCase):
 
     def test_list_notes(self):
         notes = [
-            EDNote.objects.create(title="note 1", body="body note 1"),
-            EDNote.objects.create(title="note 2", body="body note 2"),
+            EDNote.objects.create(title="note 1", body="body note 1", owner=self.user),
+            EDNote.objects.create(title="note 2", body="body note 2", owner=self.user),
         ]
 
         response = self.client.get(reverse('notes:ednote-list'))
@@ -76,7 +76,16 @@ class NotesTest(APITestCase):
     def test_post_create(self):
         response = self.client.post(reverse('notes:ednote-list'), data={
             'title': 'title 1',
-            'body': 'body 1'
+            'body': 'body 1',
+            'owner': self.user.id
         })
 
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
+
+    def test_retrieve_post_by_id(self):
+        note = EDNote.objects.create(title="note 3",
+                                     body="body note 4",
+                                     owner=self.user)
+
+        response = self.client.get(note.get_absolute_url())
+        self.assertEqual(status.HTTP_200_OK, response.status_code)

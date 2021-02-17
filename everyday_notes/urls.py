@@ -8,6 +8,7 @@ app_name = "everyday_notes"
 
 router = routers.SimpleRouter()
 router.register(r'notes', EDNoteView)
+print(router.urls)
 
 urlpatterns = [
     path('', include(router.urls)),

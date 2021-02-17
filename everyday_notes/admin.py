@@ -7,10 +7,10 @@ from .models import EDNote
 @admin.register(EDNote)
 class EDNoteAdmin(admin.ModelAdmin):
     fields = (
-        'id', 'title', 'body', 'created', 'modified'
+        'id', 'title', 'body', 'created', 'modified', 'owner'
     )
     list_display = (
-        'id', 'title', 'body', 'created', 'modified'
+        'id', 'title', 'body', 'created', 'modified', 'owner'
     )
     readonly_fields = (
         'id', 'created', 'modified'
