@@ -1,13 +1,7 @@
 Cypress.Commands.add('logInCmd', () => {
 
     const { username, password } = Cypress.env('credentials');
-        cy.intercept('POST', 'login', {
-            statusCode: 200,
-            body: {
-                'access': 'ACCESS_TOKEN',
-                'refresh': 'REFRESH_TOKEN'
-            }
-        }).as('logIn');
+        cy.intercept('POST', 'login').as('logIn');
 
     cy.visit('/#/log-in');
     cy.get('input#username').type(username);

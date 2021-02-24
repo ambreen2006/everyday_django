@@ -1,4 +1,22 @@
+const faker = require('faker');
+
+const random_email = faker.internet.userName() + "@everydaytest.com";
+
 describe('Authentication', function() {
+
+    it('Can sign up', function() {
+
+        cy.intercept('POST', 'users').as('signUp');
+
+        cy.visit('/#/sign-up');
+        cy.get('input#username').type(random_email);
+        cy.get('input#firstName').type('Test2');
+        cy.get('input#lastName').type('User');
+        cy.get('input#password').type('pAssw0rd', {log: false});
+        cy.get('button').contains('Sign Up').click();
+        cy.wait('@signUp');
+        cy.hash().should('eq', '#/log-in');
+    });
 
     it('Show invalid fields on signup error', function() {
         cy.intercept('POST', 'users', {
@@ -10,7 +28,7 @@ describe('Authentication', function() {
 
         cy.visit('signUp');
         cy.visit('/#/sign-up');
-        cy.get('input#username').type('test1@everydayapps.com');
+        cy.get('input#username').type(random_email);
         cy.get('input#firstName').type('Test');
         cy.get('input#lastName').type('User');
         cy.get('input#password').type('pAssw0rd', { log: false });
@@ -26,28 +44,6 @@ describe('Authentication', function() {
         cy.get('button').contains('Logout');
     });
 
-    it('Can sign up', function() {
-
-        cy.intercept('POST', 'users', {
-            statusCode: 201,
-            body: {
-                'id': 1,
-                'username': 'test@everydayapps.com',
-                'first_name': 'Test',
-                'last_name': 'User',
-            }
-        }).as('signUp');
-
-        cy.visit('/#/sign-up');
-        cy.get('input#username').type('test2@everydayapps.com');
-        cy.get('input#firstName').type('Test2');
-        cy.get('input#lastName').type('User');
-        cy.get('input#password').type('pAssw0rd', {log: false});
-        cy.get('button').contains('Sign Up').click();
-        cy.wait('@signUp');
-        cy.hash().should('eq', '#/log-in');
-    });
-
     it('Cannot visit the login page when logged in', function() {
         cy.logInCmd();
         cy.visit('/#/log-in');
@@ -57,21 +53,16 @@ describe('Authentication', function() {
     it('Shows an alert on login error', function() {
 
         const { username, password } = Cypress.env('credentials');
-        cy.intercept('POST', 'login', {
-            statusCode: 400,
-            body: {
-                'detail': 'Wrong credentials'
-            }
-        }).as('logIn');
+        cy.intercept('POST', 'login').as('logIn');
 
         cy.visit('/#/log-in');
         cy.get('input#username').type(username);
-        cy.get('input#password').type(password, {log: false});
+        cy.get('input#password').type("wrong password", {log: false});
         cy.get('button').contains('Login').click();
 
         cy.wait('@logIn');
         cy.get('div.alert').contains(
-            'Wrong credentials'
+            'No active account found'
         );
         cy.hash().should('eq', '#/log-in');
     });

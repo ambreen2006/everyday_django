@@ -17,7 +17,7 @@ function App() {
     });
 
     const logIn = async (username, password) => {
-        const url = 'http://localhost:5000/users/login/';
+        const url = `${process.env.REACT_APP_BASE_URL}/users/login/`;
         try {
             const response = await axios.post(url, {username, password});
             console.log('Response from server: ', response);

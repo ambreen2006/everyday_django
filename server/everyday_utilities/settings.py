@@ -158,7 +158,7 @@ SIMPLE_JWT = {
 }
 
 CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000",
+    "http://localhost:3001",
 ]
 
 LOGIN_REDIRECT_URL = "/users/dashboard/"
