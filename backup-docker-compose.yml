@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+
+  everyday-server:
+    build:
+      context: ./server
+    command: python manage.py runserver 0.0.0.0:8000
+    container_name: everyday-server
+    depends_on:
+      - everyday-database
+    environment:
+      - PGDATABASE=everydaydb
+      - PGUSER=eu_user
+      - PGPASSWORD=matrix-algo-cake
+      - PGHOST=everyday-database
+    ports:
+      - 8003:8000
+    volumes:
+      - ./server/:/usr/src/app
+
+  everyday-database:
+    image: postgres:13-alpine
+    environment:
+      - POSTGRES_USER=eu_user
+      - POSTGRES_PASSWORD=matrix-algo-cake
+      - POSTGRES_DB=everydaydb
+    expose:
+      - 5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  everyday-client:
+    build:
+      context: ./frontend
+    command: npm start
+    container_name: everyday-client
+    depends_on:
+      - everyday-server
+    ports:
+      - 3001:3000
+    stdin_open: true
+
+volumes:
+  postgres_data:
