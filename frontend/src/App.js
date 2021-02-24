@@ -7,8 +7,8 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Link, Route, Switch, Redirect } from 'react-router-dom';
 
 import './App.css';
-import SignUp from './components/SignUp';
-import LogIn from './components/LogIn';
+import SignUp from './components/signUp';
+import LogIn from './components/logIn';
 
 function App() {
 
